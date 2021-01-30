@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Twitch-Bot by Mecke_Dev</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  </head>
+
+  <body class="bg-dark text-primary font-weight-bold mx-2" onload=load_settings()>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    <p class="display-5 text-center">Login - Settings <br> (Please restart after changing this)</p>
+
+		<div class="input-group mb-3">
+
+			<div class="input-group-prepend">
+				<span class="input-group-text">Twitch-Username</span>
+			</div>
+
+			<input type="text" class="form-control" aria-label="Default" id="channelname" aria-describedby="inputGroup-sizing-default" placeholder="No Username set">
+		
+			<div class="input-group-append">
+				<button class="btn btn-success" onclick="save_name()" type="button">save</button>
+			</div>
+			
+		</div>
+		
+		<div class="input-group mb-3">
+
+			<div class="input-group-prepend">
+				<span class="input-group-text">Oauth-Token</span>
+			</div>
+
+			<input type="text" class="form-control" aria-label="Default" id="oauth" aria-describedby="inputGroup-sizing-default" placeholder="No Token found, do not show this Code on Stream!">
+		
+			<div class="input-group-append">
+				<button class="btn btn-primary" onclick="open_link('https://twitchapps.com/tmi/')" type="button">Get Oauth-Token here</button>
+				<button class="btn btn-success" onclick=save_oauth() type="button">save Token</button>
+			</div>
+			
+		</div>
+
+		<p class="display-5 text-center">CSGO - Settings</p>
+
+		<div class="input-group mb-3">
+
+			<div class="input-group-prepend">
+				<span class="input-group-text">CSGO Path</span>
+			</div>
+
+			<div class="custom-file">
+				<input type="file" id="path" class="custom-file-input" accept=".cfg">
+				<label type="textarea" id="set_path" class="custom-file-label" placeholder="Pick your Autoexec.cfg in your CSGO Direcrory"></label>
+			</div>
+
+			<button class="btn btn-success" onclick="save_path()" type="button">save</button>
+
+		</div>
+
+		<div class="input-group mb-3">
+
+			<div class="input-group-prepend">
+				<span class="input-group-text">viewmodel</span>
+			</div>
+			
+			<input type="text" class="form-control" aria-label="Default" id="viewmodel" aria-describedby="inputGroup-sizing-default" placeholder="No Code set">
+			
+			<div class="input-group-append">
+				<button class="btn btn-success" onclick="set_info('viewmodel')" type="button">use Reward-ID</button>
+			</div>
+
+		</div>
+
+		<div class="input-group mb-3">
+
+			<div class="input-group-prepend">
+				<span class="input-group-text">crosshair</span>
+			</div>
+			
+			<input type="text" class="form-control" aria-label="Default" id="crosshair" aria-describedby="inputGroup-sizing-default" placeholder="No Code set">
+			
+			<div class="input-group-append">
+				<button class="btn btn-success" onclick="set_info('crosshair')" type="button">use Reward-ID</button>
+			</div>
+
+		</div>
+
+		<div class="input-group mb-3">
+
+			<div class="input-group-prepend">
+				<span class="input-group-text">drop_weapon</span>
+			</div>
+			
+			<input type="text" class="form-control" aria-label="Default" id="drop_weapon" aria-describedby="inputGroup-sizing-default" placeholder="No Code set">
+			
+			<div class="input-group-append">
+				<button class="btn btn-success" onclick="set_info('drop_weapon')" type="button">use Reward-ID</button>
+			</div>
+
+		</div>
+
+		<div class="input-group mb-3">
+
+			<div class="input-group-prepend">
+				<span class="input-group-text">buy_weapon</span>
+			</div>
+			
+			<input type="text" class="form-control" aria-label="Default" id="buy_weapon" aria-describedby="inputGroup-sizing-default" placeholder="No Code set">
+			
+			<div class="input-group-append">
+				<button class="btn btn-success" onclick="set_info('buy_weapon')" type="button">use Reward-ID</button>
+			</div>
+
+		</div>
+
+		<div class="input-group mb-3">
+
+			<div class="input-group-prepend">
+				<span class="input-group-text">ingame_chat</span>
+			</div>
+			
+			<input type="text" class="form-control" aria-label="Default" id="ingame_chat" aria-describedby="inputGroup-sizing-default" placeholder="No Code set">
+			
+			<div class="input-group-append">
+				<button class="btn btn-success" onclick="set_info('ingame_chat')" type="button">use Reward-ID</button>
+			</div>
+
+		</div>
+
+		<p class="display-5 text-center">CSGO - Keys <br> for normal Letters just enter the Letter, for the Rest use the Keys below to get the correct KeyCode</p>
+
+		<div class="input-group mb-3">
+
+			<div class="input-group-prepend">
+				<span class="input-group-text">Key to execute Commands</span>
+			</div>
+			
+			<input type="text" class="form-control" aria-label="Default" id="key_execute_commands" aria-describedby="inputGroup-sizing-default" placeholder="No Key set">
+			
+			<div class="input-group-append">
+				<button class="btn btn-primary" onclick="set_key('key_execute_commands')" type="button">use Keycode</button>
+				<button class="btn btn-success" onclick="save_key('key_execute_commands')" type="button">save</button>
+			</div>
+
+		</div>
+
+		<div class="input-group mb-3">
+
+			<div class="input-group-prepend">
+				<span class="input-group-text">Key to reset Crosshair</span>
+			</div>
+			
+			<input type="text" class="form-control" aria-label="Default" id="key_reset_crosshair" aria-describedby="inputGroup-sizing-default" placeholder="No Key set">
+			
+			<div class="input-group-append">
+				<button class="btn btn-primary" onclick="set_key('key_reset_crosshair')" type="button">use Keycode</button>
+				<button class="btn btn-success" onclick="save_key('key_reset_crosshair')" type="button">save</button>
+			</div>
+
+		</div>
+
+		<div class="input-group mb-3">
+
+			<div class="input-group-prepend">
+				<span class="input-group-text">Key to reset Viewmodel</span>
+			</div>
+			
+			<input type="text" class="form-control" aria-label="Default" id="key_reset_viewmodel" aria-describedby="inputGroup-sizing-default" placeholder="No Key set">
+			
+			<div class="input-group-append">
+				<button class="btn btn-primary" onclick="set_key('key_reset_viewmodel')" type="button">use Keycode</button>
+				<button class="btn btn-success" onclick="save_key('key_reset_viewmodel')" type="button">save</button>
+			</div>
+
+		</div>
+
+		<hr>
+		
+		<h1 id="set_code" class="display-8 text-center text-dark bg-success">no Reward-ID found</h1>
+		
+		<button class="btn btn-danger" onclick="toggle_keys()"> Show / Hide Keys </button>
+		<div class="card card-body" id="keycode_gen" style="display: none;">
+			<p>Numpad</p>
+			<div class="btn-toolbar" role="toolbar">
+				<div role="group" class="btn-group mr-2">
+					<button value="kp_ins" id="kp_ins" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">0</button>
+					<button value="kp_end" id="kp_end" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">1</button>
+					<button value="kp_downarrow" id="kp_downarrow" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">2</button>
+					<button value="kp_pgdn" id="kp_pgdn" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">3</button>
+					<button value="kp_leftarrow" id="kp_leftarrow" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">4</button>
+					<button value="kp_5" id="kp_5" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">5</button>
+					<button value="kp_rightarrow" id="kp_rightarrow" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">6</button>
+					<button value="kp_home" id="kp_home" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">7</button>
+					<button value="kp_uparrow" id="kp_uparrow" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">8</button>
+					<button value="kp_pgup" id="kp_pgup" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">9</button>
+				</div>
+				<div role="group" class="btn-group mr-2">
+					<button value="kp_slash" id="kp_slash" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">/</button>
+					<button value="kp_multiply" id="kp_multiply" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">*</button>
+					<button value="kp_minus" id="kp_minus" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">-</button>
+					<button value="kp_plus" id="kp_plus" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">+</button>
+					<button value="kp_enter" id="kp_enter" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">Enter</button>
+					<button value="kp_del" id="kp_del" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">. DEL</button>
+				</div>
+			</div>
+			<hr>
+			<p>Function Keys</p>
+			<div class="btn-toolbar  justify-content-between" role="toolbar">
+				<div role="group" class="btn-group">
+					<button value="f1" id="f1" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">F1</button>
+					<button value="f2" id="f2" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">F2</button>
+					<button value="f3" id="f3" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">F3</button>
+					<button value="f4" id="f4" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">F4</button>
+					<button value="f5" id="f5" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">F5</button>
+					<button value="f6" id="f6" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">F6</button>
+					<button value="f7" id="f7" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">F7</button>
+					<button value="f8" id="f8" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">F8</button>
+					<button value="f9" id="f9" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">F9</button>
+					<button value="f10" id="f10" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">F10</button>
+					<button value="f11" id="f11" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">F11</button>
+					<button value="f12" id="f12" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">F12</button>
+				</div>
+
+				<div class="input-group w-50 pr-5">
+					<div class="input-group-prepend">
+					<div class="input-group-text">KEYCODE</div>
+					</div>
+					<input type="text" class="form-control" id="keycode" placeholder="the Keycode will appear here">
+				</div>
+
+			</div>
+			<hr>
+			<p>Navigation Keys</p>
+			
+			<div class="btn-toolbar" role="toolbar">
+				<div role="group" class="btn-group">
+					<button value="ins" id="ins" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">Insert</button>
+					<button value="home" id="home" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">Home</button>
+					<button value="pgup" id="pgup" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">Page Up</button>
+					<button value="del" id="del" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">Delete</button>
+					<button value="end" id="end" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">End</button>
+					<button value="pgdn" id="pgdn" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">Page Down</button>
+					<button value="uparrow" id="uparrow" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">↑</button>
+					<button value="leftarrow" id="leftarrow" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">←</button>
+					<button value="downarrow" id="downarrow" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">↓</button>
+					<button value="rightarrow" id="rightarrow" type="button" onclick="get_key(this.value)" class="mr-1 btn btn-primary">→</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <script src="./bot.js"></script>
+
+    <script>
+
+		function toggle_keys(){
+
+			var x = document.getElementById("keycode_gen")
+
+			if (x.style.display === "none") {
+				x.style.display = "block";
+			} else {
+				x.style.display = "none";
+			}
+
+		}
+
+		function set_key(key){
+
+			if(document.getElementById("keycode").value){
+			var keycode = document.getElementById("keycode").value;
+			document.getElementById(key).value = keycode;
+			}
+			else{
+				alert("You have to enter a Letter or press a Key from below first. (Toggle the 'Show/Hide Keys' - Button)")
+			}
+
+		}
+
+		function get_key(key){
+			document.getElementById("keycode").value = key
+		}
+
+		function set_info(setting){
+
+			const config = require('./settings.json');
+			const fs = require("fs");
+
+			
+			var code = document.getElementById("set_code").innerHTML
+		  	document.getElementById(setting).value = code
+
+			var setting_val = document.getElementById(setting).value;
+			if (setting_val.split("-").length == 5){
+				config.csgo["reward_id_"+setting] = setting_val;
+
+				fs.writeFile('./settings.json', JSON.stringify(config, null, 4), err => {
+					//console.log("saved")
+				})
+
+				load_settings();
+			}
+			else{
+				alert("You have to trigger the Event once to get the Reward-ID. ")
+			}
+
+		}
+
+		function save_key(setting){
+
+			const config = require('./settings.json');
+			const fs = require("fs");
+
+			var setting_val = document.getElementById(setting).value;
+			if(setting_val){
+				config.csgo[setting] = setting_val;
+
+				fs.writeFile('./settings.json', JSON.stringify(config, null, 4), err => {
+					//console.log("saved")
+				})
+
+				load_settings();
+				update_cfg();
+			}
+
+		}
+
+		function save_name(){
+
+			const config = require('./settings.json');
+			const fs = require("fs");
+
+			var channelname = document.getElementById("channelname").value;
+			if (channelname){
+				config.login.channelname = channelname;
+
+				fs.writeFile('./settings.json', JSON.stringify(config, null, 4), err => {
+					//console.log("saved")
+				})
+
+				load_settings();
+
+			}
+			else{
+				alert("You need to enter a Channelname first. ")
+			}
+
+		};
+
+		function save_oauth(){
+			const config = require('./settings.json');
+			const fs = require("fs");
+
+			var oauth = document.getElementById("oauth").value;
+			if (oauth.startsWith("oauth:")){
+				config.login.oauth = oauth;
+
+				fs.writeFile('./settings.json', JSON.stringify(config, null, 4), err => {
+					//console.log("saved")
+				})
+
+				load_settings();
+			}
+			else{
+				alert("You entered a wrong Oauth-Token, Token must begin with oauth: ")
+			}
+
+		};
+
+      function load_settings(){
+
+		const config = require('./settings.json');
+
+        if (!config.csgo.cfg_folder){
+        	document.getElementById("set_path").innerHTML = "Select your autoexec.cfg (create one if not exist)"
+        }
+        else{
+        	document.getElementById("set_path").innerHTML = config.csgo.cfg_folder
+		}
+
+		if (config.login.oauth){
+			document.getElementById("oauth").value = "";
+			document.getElementById("oauth").placeholder = "Token was found, do not show on Stream.";
+		}
+
+		if (config.login.channelname){
+			document.getElementById("channelname").placeholder = config.login.channelname;
+		}
+
+		if (config.csgo.reward_id_viewmodel){
+			document.getElementById("viewmodel").placeholder = config.csgo.reward_id_viewmodel;
+		}
+
+		if (config.csgo.reward_id_crosshair){
+			document.getElementById("crosshair").placeholder = config.csgo.reward_id_crosshair;
+		}
+
+		if (config.csgo.reward_id_drop_weapon){
+			document.getElementById("drop_weapon").placeholder = config.csgo.reward_id_drop_weapon;
+		}
+
+		if (config.csgo.reward_id_buy_weapon){
+			document.getElementById("buy_weapon").placeholder = config.csgo.reward_id_buy_weapon;
+		}
+
+		if (config.csgo.reward_id_ingame_chat){
+			document.getElementById("ingame_chat").placeholder = config.csgo.reward_id_ingame_chat;
+		}
+
+		if (config.csgo.key_execute_commands){
+			document.getElementById("key_execute_commands").placeholder = config.csgo.key_execute_commands;
+		}
+
+		if (config.csgo.key_reset_crosshair){
+			document.getElementById("key_reset_crosshair").placeholder = config.csgo.key_reset_crosshair;
+		}
+
+		if (config.csgo.key_reset_viewmodel){
+			document.getElementById("key_reset_viewmodel").placeholder = config.csgo.key_reset_viewmodel;
+		}
+
+
+
+      };
+
+      function save_path(){
+
+        const config = require('./settings.json');
+        const fs = require("fs");
+
+		if (document.getElementById("path").files[0].path.includes("autoexec.cfg")){
+			var fpath = document.getElementById("path").files[0].path.replace("autoexec.cfg", "");
+			document.getElementById("set_path").innerHTML = fpath;
+			config.csgo.cfg_folder = fpath;
+		}
+		else{
+			alert("Please press the 'Browse'-Button and select your Autoexec.cfg")
+		}
+		
+        fs.writeFile('./settings.json', JSON.stringify(config, null, 4), err => {
+          //console.log("saved")
+		})
+		
+		load_settings();
+      
+      };
+
+      function open_link(link){
+        require("electron").shell.openExternal(link);
+      }
+
+    </script>
+
+  </body>
+</html>
