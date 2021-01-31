@@ -259,6 +259,9 @@
 
     <script>
 
+		
+		const settings_file = __dirname+"\\settings.json"
+
 		function toggle_keys(){
 
 			var x = document.getElementById("keycode_gen")
@@ -289,7 +292,7 @@
 
 		function set_info(setting){
 
-			const config = require('./settings.json');
+			const config = require(settings_file);
 			const fs = require("fs");
 
 			
@@ -300,7 +303,7 @@
 			if (setting_val.split("-").length == 5){
 				config.csgo["reward_id_"+setting] = setting_val;
 
-				fs.writeFile('./settings.json', JSON.stringify(config, null, 4), err => {
+				fs.writeFile(settings_file, JSON.stringify(config, null, 4), err => {
 					//console.log("saved")
 				})
 
@@ -314,14 +317,14 @@
 
 		function save_key(setting){
 
-			const config = require('./settings.json');
+			const config = require(settings_file);
 			const fs = require("fs");
 
 			var setting_val = document.getElementById(setting).value;
 			if(setting_val){
 				config.csgo[setting] = setting_val;
 
-				fs.writeFile('./settings.json', JSON.stringify(config, null, 4), err => {
+				fs.writeFile(settings_file, JSON.stringify(config, null, 4), err => {
 					//console.log("saved")
 				})
 
@@ -333,14 +336,14 @@
 
 		function save_name(){
 
-			const config = require('./settings.json');
+			const config = require(settings_file);
 			const fs = require("fs");
 
 			var channelname = document.getElementById("channelname").value;
 			if (channelname){
 				config.login.channelname = channelname;
 
-				fs.writeFile('./settings.json', JSON.stringify(config, null, 4), err => {
+				fs.writeFile(settings_file, JSON.stringify(config, null, 4), err => {
 					//console.log("saved")
 				})
 
@@ -354,14 +357,14 @@
 		};
 
 		function save_oauth(){
-			const config = require('./settings.json');
+			const config = require(settings_file);
 			const fs = require("fs");
 
 			var oauth = document.getElementById("oauth").value;
 			if (oauth.startsWith("oauth:")){
 				config.login.oauth = oauth;
 
-				fs.writeFile('./settings.json', JSON.stringify(config, null, 4), err => {
+				fs.writeFile(settings_file, JSON.stringify(config, null, 4), err => {
 					//console.log("saved")
 				})
 
@@ -375,7 +378,7 @@
 
       function load_settings(){
 
-		const config = require('./settings.json');
+		const config = require(settings_file);
 
         if (!config.csgo.cfg_folder){
         	document.getElementById("set_path").innerHTML = "Select your autoexec.cfg (create one if not exist)"
@@ -425,13 +428,11 @@
 			document.getElementById("key_reset_viewmodel").placeholder = config.csgo.key_reset_viewmodel;
 		}
 
-
-
       };
 
       function save_path(){
 
-        const config = require('./settings.json');
+        const config = require(settings_file);
         const fs = require("fs");
 
 		if (document.getElementById("path").files[0].path.includes("autoexec.cfg")){
@@ -443,7 +444,7 @@
 			alert("Please press the 'Browse'-Button and select your Autoexec.cfg")
 		}
 		
-        fs.writeFile('./settings.json', JSON.stringify(config, null, 4), err => {
+        fs.writeFile(settings_file, JSON.stringify(config, null, 4), err => {
           //console.log("saved")
 		})
 		
