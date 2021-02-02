@@ -27,9 +27,12 @@ function send_ingame(text){
 
 };
 
-function create_random(change){
+function create_random(change, code=false){
 
-    if (change == "crosshair"){
+    if (code){
+        var result = "apply_crosshair_code " + code
+    }
+    else if (change == "crosshair"){
 
         var alpha = Math.floor(randInt(50, 255));
         var thickness = randInt(0, 100);
@@ -247,7 +250,10 @@ if (config.login.channelname && config.login.oauth){
             create_random("viewmodel");
 
         if (tags["custom-reward-id"] == config.csgo.reward_id_crosshair)
-            create_random("crosshair");
+            if(message.startsWith("CSGO") && message.split("-").length == 6){
+                create_random("xhair_code", message);
+            }
+                create_random("crosshair");
         
         if (tags["custom-reward-id"] == config.csgo.reward_id_drop_weapon){
 
