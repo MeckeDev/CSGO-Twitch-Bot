@@ -17,7 +17,7 @@ function randInt(min, max) {
 
 function send_ingame(text){
 
-    var text = "say " + text;
+    var text = "say \"" + text + "\";";
 
     fs.writeFile(config.csgo.cfg_folder + 'twitch_bot.cfg', filter.clean(text), (err) => {
         // console.log("saved: " + text);
@@ -246,20 +246,23 @@ if (config.login.channelname && config.login.oauth){
             }
         }
 
-        if (tags["custom-reward-id"] == config.csgo.reward_id_viewmodel)
+        if (tags["custom-reward-id"] == config.csgo.reward_id_viewmodel){
             create_random("viewmodel");
+        }
 
-        if (tags["custom-reward-id"] == config.csgo.reward_id_crosshair)
+        if (tags["custom-reward-id"] == config.csgo.reward_id_crosshair){
             if(message.startsWith("CSGO") && message.split("-").length == 6){
                 create_random("xhair_code", message);
             }
+            else{
                 create_random("crosshair");
-        
+            }
+        }
+
         if (tags["custom-reward-id"] == config.csgo.reward_id_drop_weapon){
 
-            if(["1", "2"].includes(message) && !message.includes(";")){
-                execute_com(`slot${message}`);
-                ks.sendKey("g")
+            if(["1", "2", "5"].includes(message) && !message.includes(";")){
+                execute_com(`slot${message}; drop;`);
             }
         }
 
@@ -271,8 +274,9 @@ if (config.login.channelname && config.login.oauth){
             }
         }
 
-        if (tags["custom-reward-id"] == config.csgo.reward_id_ingame_chat)
+        if (tags["custom-reward-id"] == config.csgo.reward_id_ingame_chat){
             send_ingame(message);
+        }
 
         if (tags["custom-reward-id"]){
 
