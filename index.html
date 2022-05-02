@@ -69,7 +69,9 @@
 				<span class="input-group-text">viewmodel</span>
 			</div>
 			
-			<input type="text" class="form-control" aria-label="Default" id="viewmodel" aria-describedby="inputGroup-sizing-default" placeholder="No Code set">
+			<input type="text" class="form-control" id="viewmodel" placeholder="No Code set" data-bs-toggle="tooltip" data-bs-placement="top" title="
+			Every Input in the Reward generates a Random Viewmodel
+			">
 			
 			<div class="input-group-append">
 				<button class="btn btn-success" onclick="set_info('viewmodel')" type="button">use Reward-ID</button>
@@ -83,7 +85,10 @@
 				<span class="input-group-text">crosshair</span>
 			</div>
 			
-			<input type="text" class="form-control" aria-label="Default" id="crosshair" aria-describedby="inputGroup-sizing-default" placeholder="No Code set">
+			<input type="text" class="form-control" id="crosshair" placeholder="No Code set" data-bs-toggle="tooltip" data-bs-placement="top" title="
+			Every Input in the Reward generates a Random Crosshair
+			but Users can also use Crosshaircodes like: CSGO-9vmzh-QnPsd-tnQC4-ViBeP-n9eyC
+			">
 			
 			<div class="input-group-append">
 				<button class="btn btn-success" onclick="set_info('crosshair')" type="button">use Reward-ID</button>
@@ -94,10 +99,21 @@
 		<div class="input-group mb-3">
 
 			<div class="input-group-prepend">
-				<span class="input-group-text">drop_weapon</span>
+				<span class="input-group-text">switch_weapon</span>
 			</div>
 			
-			<input type="text" class="form-control" aria-label="Default" id="drop_weapon" aria-describedby="inputGroup-sizing-default" placeholder="No Code set">
+			<input type="text" class="form-control" id="drop_weapon" placeholder="No Code set" data-bs-toggle="tooltip" data-bs-placement="top" title="
+			slot1 = Primary
+			slot2 = Secondary
+			slot3 = Knife
+			slot4 = Grenade Cycle
+			slot5 = Bomb
+			slot6 = HE Grenade
+			slot7 = Flashbang
+			slot8 = Smoke
+			slot9 = Decoy
+			slot10 = Molotov
+							">
 			
 			<div class="input-group-append">
 				<button class="btn btn-success" onclick="set_info('drop_weapon')" type="button">use Reward-ID</button>
@@ -111,7 +127,9 @@
 				<span class="input-group-text">buy_weapon</span>
 			</div>
 			
-			<input type="text" class="form-control" aria-label="Default" id="buy_weapon" aria-describedby="inputGroup-sizing-default" placeholder="No Code set">
+			<input type="text" class="form-control" id="buy_weapon" placeholder="No Code set" data-bs-toggle="tooltip" data-bs-placement="top" title="
+			Users can pick a Weapon which gets bought instantly, currently Users should only use it in Buytime, will be fixed soon
+			">
 			
 			<div class="input-group-append">
 				<button class="btn btn-success" onclick="set_info('buy_weapon')" type="button">use Reward-ID</button>
@@ -125,7 +143,9 @@
 				<span class="input-group-text">ingame_chat</span>
 			</div>
 			
-			<input type="text" class="form-control" aria-label="Default" id="ingame_chat" aria-describedby="inputGroup-sizing-default" placeholder="No Code set">
+			<input type="text" class="form-control" id="ingame_chat" placeholder="No Code set" data-bs-toggle="tooltip" data-bs-placement="top" title="
+			Users can send Messages ingame, please only use this if you trust your Viewers or set a higher Reward-Price
+			">
 			
 			<div class="input-group-append">
 				<button class="btn btn-success" onclick="set_info('ingame_chat')" type="button">use Reward-ID</button>
@@ -134,21 +154,6 @@
 		</div>
 
 		<p class="display-5 text-center">CSGO - Keys <br> for normal Letters just enter the Letter, for the Rest use the Keys below to get the correct KeyCode</p>
-
-		<div class="input-group mb-3">
-
-			<div class="input-group-prepend">
-				<span class="input-group-text">Key to execute Commands</span>
-			</div>
-			
-			<input type="text" class="form-control" aria-label="Default" id="key_execute_commands" aria-describedby="inputGroup-sizing-default" placeholder="No Key set">
-			
-			<div class="input-group-append">
-				<button class="btn btn-primary" onclick="set_key('key_execute_commands')" type="button">use Keycode</button>
-				<button class="btn btn-success" onclick="save_key('key_execute_commands')" type="button">save</button>
-			</div>
-
-		</div>
 
 		<div class="input-group mb-3">
 

@@ -1,13 +1,9 @@
 var config = require("./settings.json");
 var tmi = require('tmi.js');
-var ks = require('node-key-sender');
 var fs = require("fs");
-
-ks.setOption('globalDelayPressMillisec', 200);
-ks.setOption('globalDelayBetweenMillisec', 600);
+const Telnet = require("telnet-client");
 
 var Filter = require('bad-words');
-const { execute } = require("node-key-sender");
 filter = new Filter();
 
 
@@ -15,19 +11,33 @@ function randInt(min, max) {
     return Math.random() * (max - min) + min;
 };
 
-function send_ingame(text){
+async function write_console(command, drop=false){
 
-    var text = "say \"" + text + "\";";
+    //console.log(command)
+    const connection = new Telnet.Telnet();
+  
+    const params = {
+      host: "127.0.0.1",
+      port: "4545",
+      negotiationMandatory: false,
+      timeout: 1500,
+    };
+  
+    await connection.connect(params);
+    const socket = connection.getSocket();
+  
+    //console.log(command)
+    if(!drop){
+        command = command.split(";")[0]
+        await connection.exec(command);
+    }
+    else{
+            await connection.exec(command)
+        }
 
-    fs.writeFile(config.csgo.cfg_folder + 'twitch_bot.cfg', filter.clean(text), (err) => {
-        // console.log("saved: " + text);
-    });
+  }
 
-    ks.sendKey(config.csgo.key_execute_commands);
-
-};
-
-function create_random(change, code=false){
+async function create_random(change, code=false){
 
     if (code){
         var result = "apply_crosshair_code " + code
@@ -56,7 +66,6 @@ cl_crosshaircolor_b "${farbe_blau}";
 cl_crosshairdot "${dot}";
 cl_crosshairgap "${gap}";
 cl_crosshairsize "${size}";
-cl_crosshairstyle "${style}";
 cl_crosshairusealpha "1";
 cl_crosshairthickness "${thickness}"
 cl_fixedcrosshairgap "${gap_fixed}"
@@ -97,22 +106,8 @@ cl_bobcycle "${bob_cycle}"
         result = ""
     }
 
-    fs.writeFile(config.csgo.cfg_folder + "twitch_bot.cfg", result, (err) => {
-        //console.log("saved");
-    })
+    await write_console(result, true)
 
-    ks.sendKey(config.csgo.key_execute_commands)
-
-};
-
-function execute_com(text){
-
-    fs.writeFile(config.csgo.cfg_folder + "twitch_bot.cfg", text, (err) => {
-        //console.log("saved");
-    })
-
-    ks.sendKey(config.csgo.key_execute_commands);
-    
 };
 
 function check_gun(weapon){
@@ -176,14 +171,13 @@ function check_gun(weapon){
 }
 
 function update_cfg(){
-    if (!config.csgo.key_execute_commands || !config.csgo.key_reset_crosshair || !config.csgo.key_reset_viewmodel && config.csgo.cfg_folder){
+    if (!config.csgo.key_reset_crosshair || !config.csgo.key_reset_viewmodel && config.csgo.cfg_folder){
         alert("Do not forget to setup the Keys in the Settings")
     }
     else{
 
         var text = `
 
-    bind "${config.csgo.key_execute_commands}" "exec twitch_bot"
     bind "${config.csgo.key_reset_crosshair}" "exec crosshair"
     bind "${config.csgo.key_reset_viewmodel}" "exec viewmodel"
 
@@ -240,12 +234,6 @@ if (config.login.channelname && config.login.oauth){
 
     client.on('message', (channel, tags, message, self) => {
 
-        if (["ceptoplex", "mecke_dev"].includes(tags.username.toLowerCase()) || tags.mod){
-            if (message.startsWith("$sens")){
-                execute_com("sensitivity " + message.split(" ")[1])
-            }
-        }
-
         if (tags["custom-reward-id"] == config.csgo.reward_id_viewmodel){
             create_random("viewmodel");
         }
@@ -261,21 +249,23 @@ if (config.login.channelname && config.login.oauth){
 
         if (tags["custom-reward-id"] == config.csgo.reward_id_drop_weapon){
 
-            if(["1", "2", "5"].includes(message) && !message.includes(";")){
-                execute_com(`slot${message}; drop;`);
-            }
+            // if(["1", "2", "5"].includes(message) && !message.includes(";")){
+            //     write_console(`slot${message};`);
+            // }
+            if(message.includes(";")) {message = message.split(";")[0]}
+            write_console(`slot${message.replace("slot", "")};`);
         }
 
         if (tags["custom-reward-id"] == config.csgo.reward_id_buy_weapon){
             var weapon = check_gun(message.toLowerCase());
             
             if(weapon){
-                execute_com("buy " + weapon);
+                write_console("buy " + weapon);
             }
         }
 
         if (tags["custom-reward-id"] == config.csgo.reward_id_ingame_chat){
-            send_ingame(message);
+            write_console(`say ${tags.username} said: ${message}`);
         }
 
         if (tags["custom-reward-id"]){
