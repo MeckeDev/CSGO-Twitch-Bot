@@ -28,6 +28,7 @@
   "homepage": "https://github.com/MeckeDev/CSGO-Twitch-Bot#readme",
   "dependencies": {
     "bad-words": "^3.0.4",
+    "electron-packager": "^15.5.1",
     "event-stream": "^4.0.1",
     "telnet-client": "^2.0.2",
     "tmi.js": "^1.7.1",

@@ -1,16 +1,16 @@
 {
     "login": {
-        "oauth": "",
-        "channelname": ""
+        "oauth": false,
+        "channelname": false
     },
     "csgo": {
-        "reward_id_viewmodel": "",
-        "reward_id_crosshair": "",
-        "reward_id_drop_weapon": "",
-        "reward_id_buy_weapon": "",
-        "reward_id_ingame_chat": "",
-        "cfg_folder": "",
-        "key_reset_crosshair": "",
-        "key_reset_viewmodel": ""
+        "reward_id_viewmodel": false,
+        "reward_id_crosshair": false,
+        "reward_id_drop_weapon": false,
+        "reward_id_buy_weapon": false,
+        "reward_id_ingame_chat": false,
+        "cfg_folder": false,
+        "key_reset_crosshair": false,
+        "key_reset_viewmodel": false
     }
 }
